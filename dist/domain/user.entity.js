@@ -32,15 +32,15 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { name: 'gender', length: 10 }),
+    (0, typeorm_1.Column)('varchar', { name: 'gender', nullable: true, length: 10 }),
     __metadata("design:type", String)
 ], User.prototype, "gender", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { name: 'phone', length: 20 }),
+    (0, typeorm_1.Column)('varchar', { name: 'phone', nullable: true, length: 20 }),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { name: 'birth', length: 10 }),
+    (0, typeorm_1.Column)('varchar', { name: 'birth', nullable: true, length: 10 }),
     __metadata("design:type", String)
 ], User.prototype, "birth", void 0);
 __decorate([

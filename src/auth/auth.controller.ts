@@ -14,12 +14,22 @@ export class AuthController {
       if (!code || !domain) {
         throw new BadRequestException('카카오 정보가 없습니다.');
       }
+      
+      //카카오 로그인
       const kakao = await this.authService.kakaoLogin({ code, domain });
       
       // console.log(`kakaoUserInfo : ${JSON.stringify(kakao)}`);
-      // if (!kakao.id) {
-      //   throw new BadRequestException('카카오 정보가 없습니다.');
-      // }
+      if (!kakao.id) {
+        throw new BadRequestException('카카오 정보가 없습니다.');
+      }
+      
+      // 로그인 처리 - 회원 가입이 안되어 있을 경우 가입 처리
+      const jwt =  await this.authService.login(kakao);
+      console.log(`jwt.accessToken : ${jwt.accessToken}`);
+      res.send({
+        accessToken: jwt.accessToken,
+        message: 'success'
+      });
       
       res.send({
         user: kakao,

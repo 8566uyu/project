@@ -26,6 +26,15 @@ let AuthController = class AuthController {
                 throw new common_1.BadRequestException('카카오 정보가 없습니다.');
             }
             const kakao = await this.authService.kakaoLogin({ code, domain });
+            if (!kakao.id) {
+                throw new common_1.BadRequestException('카카오 정보가 없습니다.');
+            }
+            const jwt = await this.authService.login(kakao);
+            console.log(`jwt.accessToken : ${jwt.accessToken}`);
+            res.send({
+                accessToken: jwt.accessToken,
+                message: 'success'
+            });
             res.send({
                 user: kakao,
                 message: 'success',

@@ -10,13 +10,29 @@ exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
+const jwt_1 = require("@nestjs/jwt");
+const typeorm_1 = require("@nestjs/typeorm");
+const user_service_1 = require("./user.service");
+const passport_jwt_strategy_1 = require("./security/passport.jwt.strategy");
+const user_entity_1 = require("../domain/user.entity");
+const passport_1 = require("@nestjs/passport");
+const user_authority_entity_1 = require("../domain/user-authority.entity");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, user_authority_entity_1.UserAuthority]),
+            jwt_1.JwtModule.register({
+                secret: 'secret',
+                signOptions: { expiresIn: '300s' },
+            }),
+            passport_1.PassportModule
+        ],
+        exports: [typeorm_1.TypeOrmModule, auth_service_1.AuthService, user_service_1.UserService],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService]
+        providers: [auth_service_1.AuthService, user_service_1.UserService, passport_jwt_strategy_1.JwtStrategy]
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map
